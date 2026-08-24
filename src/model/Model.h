@@ -32,6 +32,8 @@
 #include "FlowReferenceBC.h"
 #include "Junction.h"
 #include "LinearElastanceChamber.h"
+#include "MatlabRightHeart.h"
+#include "MatlabRightHeartPulmonary.h"
 #include "Node.h"
 #include "OpenLoopCoronaryBC.h"
 #include "OpenLoopCoronaryVarResBC.h"

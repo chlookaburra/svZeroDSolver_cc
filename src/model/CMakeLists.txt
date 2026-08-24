@@ -24,6 +24,8 @@ set(CXXSRCS
   DOFHandler.cpp
   FlowReferenceBC.cpp
   Junction.cpp
+  MatlabRightHeart.cpp
+  MatlabRightHeartPulmonary.cpp
   Model.cpp
   Node.cpp
   OpenLoopCoronaryBC.cpp
@@ -58,6 +60,8 @@ set(HDRS
   DOFHandler.h
   FlowReferenceBC.h
   Junction.h
+  MatlabRightHeart.h
+  MatlabRightHeartPulmonary.h
   Model.h
   Node.h
   OpenLoopCoronaryBC.h
@@ -82,4 +86,3 @@ target_include_directories( ${lib} PUBLIC
 
 target_link_libraries( ${lib} Eigen3::Eigen )
 target_link_libraries( ${lib} nlohmann_json::nlohmann_json )
-

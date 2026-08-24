@@ -35,6 +35,9 @@ Model::Model() {
       {"BloodVesselCRL", block_factory<BloodVesselCRL>()},
       {"PiecewiseValve", block_factory<PiecewiseValve>()},
       {"LinearElastanceChamber", block_factory<LinearElastanceChamber>()},
+      {"MatlabRightHeart", block_factory<MatlabRightHeart>()},
+      {"MatlabRightHeartPulmonary",
+       block_factory<MatlabRightHeartPulmonary>()},
       {"BloodVesselRC", block_factory<BloodVesselRC>()}};
 }
 

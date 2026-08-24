@@ -247,8 +247,11 @@ void validate_input(const nlohmann::json& config) {
   if (!config.contains("simulation_parameters")) {
     throw std::runtime_error("Define simulation_parameters");
   }
-  if (!config.contains("boundary_conditions")) {
-    throw std::runtime_error("Define at least one boundary condition");
+  if (!config.contains("boundary_conditions") && !config.contains("chambers") &&
+      !config.contains("closed_loop_blocks") && !config.contains("vessels")) {
+    throw std::runtime_error(
+        "Define at least one model component (boundary_conditions, chambers, "
+        "closed_loop_blocks, or vessels)");
   }
 }
 
@@ -316,11 +319,13 @@ void load_simulation_model(const nlohmann::json& config, Model& model) {
   // Create map for boundary conditions to boundary condition type
   component = "boundary_conditions";
   std::map<std::string, std::string> bc_type_map;
-  for (size_t i = 0; i < config[component].size(); i++) {
-    const auto& bc_config = JsonWrapper(config, component, "bc_name", i);
-    std::string bc_name = bc_config["bc_name"];
-    std::string bc_type = bc_config["bc_type"];
-    bc_type_map.insert({bc_name, bc_type});
+  if (config.contains(component)) {
+    for (size_t i = 0; i < config[component].size(); i++) {
+      const auto& bc_config = JsonWrapper(config, component, "bc_name", i);
+      std::string bc_name = bc_config["bc_name"];
+      std::string bc_type = bc_config["bc_type"];
+      bc_type_map.insert({bc_name, bc_type});
+    }
   }
 
   // Create external coupling blocks
@@ -333,8 +338,10 @@ void load_simulation_model(const nlohmann::json& config, Model& model) {
   // Create boundary conditions
   component = "boundary_conditions";
   std::vector<std::string> closed_loop_bcs;
-  create_boundary_conditions(model, config, component, bc_type_map,
-                             closed_loop_bcs);
+  if (config.contains(component)) {
+    create_boundary_conditions(model, config, component, bc_type_map,
+                               closed_loop_bcs);
+  }
 
   // Create junctions
   component = "junctions";
